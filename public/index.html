@@ -2,17 +2,50 @@
 <title>
     Another P5 Sketch
 </title>
+
 <head>
-    <script src="/lib/p5.js"></script>
-    <!--Uncomment following additional libraries if needed-->
-    <script src="/lib/addons/p5.dom.js"></script>
-    <!--<script src="/lib/addons/p5.sound.js"></script>-->
 
     <!--The javascript file which contains the "main" sketch-->
     <script src="/js/sketch.js"></script>
     <!--Add additional javascript files if you want to :) -->
 </head>
+
 <body>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '106897353319959',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+            FB.getLoginStatus(function (response) {
+                console.log(response);
+                //statusChangeCallback(response);
+            });
+
+        };
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                console.log(response);
+            });
+        }
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    
     <h1>P5 Sketch</h1>
+
+    <div class="fb-login-button" data-scope="public_profile,email" onlogin="checkLoginState();">
+    </div>
 </body>
+
 </html>

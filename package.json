@@ -21,7 +21,6 @@
   "homepage": "https://github.com/derfrodo/frdtstpp#readme",
   "dependencies": {
     "express": "^4.15.2",
-    "nodemon": "^1.11.0",
-    "p5": "^0.5.7"
+    "nodemon": "^1.11.0"
   }
 }
