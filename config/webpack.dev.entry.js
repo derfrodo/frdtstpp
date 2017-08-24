@@ -2,7 +2,7 @@ var environment = process.env.NODE_ENV;
 console.log(environment);
 
 const entries = {
-    "css/styles": ["./src/styles.js"],
+    "css/styles": ["./src/styles/styles.js"],
     "script/hotApp": ["./src/hotApp.jsx"]
 }
 
