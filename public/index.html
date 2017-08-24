@@ -6,8 +6,9 @@
 <head>
 
     <!--The javascript file which contains the "main" sketch-->
-    <script src="/js/sketch.js"></script>
+    <!-- <script src="/js/sketch.js"></script> -->
     <!--Add additional javascript files if you want to :) -->
+    <script src="/script/hotApp.js"></script>
 </head>
 
 <body>
@@ -42,7 +43,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    <h1>P5 Sketch</h1>
+    <div id="app"></div>
 
     <div class="fb-login-button" data-scope="public_profile,email" onlogin="checkLoginState();">
     </div>
