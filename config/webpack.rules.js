@@ -49,6 +49,51 @@ module.exports = {
                 { loader: "postcss-loader", options: { plugins: (loader) => [autoprefixer({ browsers: ["last 2 versions"] })] } },
                 { loader: "less-loader" }
             ]
+        },
+        {
+            test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, use:
+            [
+                {
+                    loader: 'url-loader',
+                    options: { limit: 8192, mimetype: "application/font-woff" }
+                }
+            ]
+        },
+        {
+            test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use:
+            [
+                {
+                    loader: 'url-loader',
+                    options: { limit: 8192, mimetype: "application/octet-stream" }
+                }
+            ]
+        },
+        {
+            test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use:
+            [
+                {
+                    loader: 'url-loader',
+                    options: { limit: 8192 }
+                }
+            ]
+        },
+        {
+            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use:
+            [
+                {
+                    loader: 'url-loader',
+                    options: { limit: 8192, mimetype: "image/svg+xml" }
+                }
+            ]
+        },
+        {
+            test: /\.(png|jpg|gif)$/,
+            use: [
+                {
+                    loader: 'url-loader',
+                    options: { limit: 8192 }
+                }
+            ]
         }
 
     ]
