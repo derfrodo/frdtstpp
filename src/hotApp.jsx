@@ -19,5 +19,4 @@ if (module.hot) {
         rndr(<App />);
     });
 }
-
-rndr(<App />);
+window.onload = () => rndr(<App />);
