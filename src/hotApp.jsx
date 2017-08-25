@@ -3,28 +3,10 @@ import { render } from "react-dom";
 import { AppContainer } from "react-hot-loader";
 
 import { App } from "./App";
-
-
-// Store für redux...
-import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import thunkMiddleware from "redux-thunk";
-import { someApp } from "./reducers/reducer";
+import store from "./store";
 
-const store = createStore(
-    someApp,
-    window.STATE_FROM_SERVER,
-    applyMiddleware(thunkMiddleware));
-
-/* eslint-disable no-console */
-console.log(store.getState());
-
-const unsubscribe = store.subscribe(
-    () => console.log(store.getState())
-);
-
-
-// declare var module: { hot: any };
+// declare var module: { hot: any }
 
 const rndr = (NextComponent) => {
     const rootEl = document.getElementById("app");

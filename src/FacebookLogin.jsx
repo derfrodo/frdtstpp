@@ -17,15 +17,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const loginFunction = () => {
     return dispatch => {
-        console.log("dispatch");
-
         dispatch(logInFacebook())
         window.FB.login(() => {
             dispatch(loggedInFacebook())
             const status = window.FB.getLoginStatus(l => {
-                console.log(l);
                 dispatch(loginStatusChanged(l));
-
                 return Promise.resolve();
             });
         }, { scope: "public_profile,email" });
