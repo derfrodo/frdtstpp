@@ -5,5 +5,3 @@ export const loginStatusChanged = (nextStatus) => ({
     nextStatus,
     "someNumber": Math.random()
 });
-
-export const boundLoginStatusChanged = (nextStatus) => loginStatusChanged(nextStatus);

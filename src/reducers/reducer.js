@@ -22,6 +22,8 @@ export const someApp = (state = initialState, action) => {
 const reduceLoginStatus = (state = {}, action) => {
     switch (action.type) {
         case LOGIN_STATUS_CHANGED:
+            console.log("new login status: ");
+            console.log(action.nextStatus);
             return { ...state, status: action.nextStatus, nextNumber: action.someNumber };
         default:
             console.warn("Unknown action type: " + action.type);

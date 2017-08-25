@@ -16,16 +16,16 @@
     <script>
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '106897353319959',
+                appId:"106897353319959",
                 cookie: true,
                 xfbml: true,
                 version: 'v2.8'
             });
             FB.AppEvents.logPageView();
-            FB.getLoginStatus(function (response) {
-                console.log(response);
-                //statusChangeCallback(response);
-            });
+            // FB.getLoginStatus(function (response) {
+            //     console.log(response);
+            //     //statusChangeCallback(response);
+            // });
 
         };
 
@@ -45,9 +45,9 @@
     </script>
 
     <div id="app"></div>
-
+<!--     
     <div class="fb-login-button" data-scope="public_profile,email" onlogin="checkLoginState();">
-    </div>
+    </div> -->
 </body>
 
 </html>

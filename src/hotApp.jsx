@@ -4,13 +4,33 @@ import { AppContainer } from "react-hot-loader";
 
 import { App } from "./App";
 
+
+// Store für redux...
+import { Provider } from "react-redux"
+import { createStore } from "redux";
+import { someApp } from "./reducers/reducer";
+
+const store = createStore(someApp, window.STATE_FROM_SERVER);
+
+/* eslint-disable no-console */
+console.log(store.getState());
+
+const unsubscribe = store.subscribe(
+    () => console.log(store.getState())
+);
+
+
 // declare var module: { hot: any };
 
 const rndr = (NextComponent) => {
     const rootEl = document.getElementById("app");
-    const domElem = (<AppContainer>
-        {NextComponent}
-    </AppContainer>);
+    const domElem = (
+        <Provider store={store}>
+            <AppContainer>
+                {NextComponent}
+            </AppContainer>
+        </Provider>
+    );
     render(domElem, rootEl);
 };
 
