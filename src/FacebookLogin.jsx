@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { loginStatusChanged } from "./actions/loginActionCreator"
+import { loginStatusChanged, logInFacebook, loggedInFacebook } from "./actions/loginActionCreator"
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,25 +11,34 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onlogin: () => {
-            const status = window.FB.getLoginStatus(l => {
-                console.log(l);
-                dispatch(loginStatusChanged(l));
-            });
-        }
+        onlogin: () => dispatch(loginFunction()),
     }
 }
 
+const loginFunction = () => {
+    return dispatch => {
+        console.log("dispatch");
 
-const LoginTemplate = ({onlogin}) =>
-    (<a href="javascript:void(0)"
-        onClick={() => window.FB.login(onlogin, { scope: "public_profile,email" })}>
-        {/* <div
-            className="fb-login-button"
-            data-scope="public_profile,email"></div> */}
-    login
-    </a>)
+        dispatch(logInFacebook())
+        window.FB.login(() => {
+            dispatch(loggedInFacebook())
+            const status = window.FB.getLoginStatus(l => {
+                console.log(l);
+                dispatch(loginStatusChanged(l));
 
+                return Promise.resolve();
+            });
+        }, { scope: "public_profile,email" });
+        return Promise.resolve();
+    }
+}
+
+const LoginTemplate = ({dispatch, onlogin}) => {
+
+    return (<a href="javascript:void(0)" onClick={onlogin}>
+        login
+    </a>);
+}
 export const FacebookLogin = connect(
     mapStateToProps,
     mapDispatchToProps)(LoginTemplate);

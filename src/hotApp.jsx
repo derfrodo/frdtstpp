@@ -6,11 +6,15 @@ import { App } from "./App";
 
 
 // Store für redux...
-import { Provider } from "react-redux"
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunkMiddleware from "redux-thunk";
 import { someApp } from "./reducers/reducer";
 
-const store = createStore(someApp, window.STATE_FROM_SERVER);
+const store = createStore(
+    someApp,
+    window.STATE_FROM_SERVER,
+    applyMiddleware(thunkMiddleware));
 
 /* eslint-disable no-console */
 console.log(store.getState());

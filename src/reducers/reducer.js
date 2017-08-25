@@ -8,6 +8,9 @@ const initialState = {
 }
 
 export const someApp = (state = initialState, action) => {
+    console.log("New action:")
+    console.log(action)
+
     switch (action.type) {
         case LOGIN_STATUS_CHANGED:
             return { ...state, loginStatus: reduceLoginStatus(state.loginStatus, action) };
