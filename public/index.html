@@ -8,44 +8,39 @@
     <!--The javascript file which contains the "main" sketch-->
     <!-- <script src="/js/sketch.js"></script> -->
     <!--Add additional javascript files if you want to :) -->
+    <script src="//connect.facebook.net/en_US/sdk.js" id="facebook-jssdk"></script>
     <script src="/script/hotApp.js"></script>
     <script src="/css/styles.js"></script>
 </head>
 
 <body>
     <script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId:"106897353319959",
-                cookie: true,
-                xfbml: true,
-                version: 'v2.8'
-            });
-            FB.AppEvents.logPageView();
-            // FB.getLoginStatus(function (response) {
-            //     console.log(response);
-            //     //statusChangeCallback(response);
-            // });
+        // window.fbAsyncInit = function () {
+        //     FB.init({
+        //         appId: "106897353319959",
+        //         cookie: true,
+        //         xfbml: true,
+        //         version: 'v2.8'
+        //     });
+        //     FB.AppEvents.logPageView();
+        //     console.log("facebook async");
+        //     // FB.getLoginStatus(function (response) {
+        //     //     console.log(response);
+        //     //     //statusChangeCallback(response);
+        //     // });
+        // };
 
-        };
-
-        function checkLoginState() {
-            FB.getLoginStatus(function (response) {
-                console.log(response);
-            });
-        }
-
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) { return; }
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        // (function (d, s, id) {
+        //     var js, fjs = d.getElementsByTagName(s)[0];
+        //     if (d.getElementById(id)) { return; }
+        //     js = d.createElement(s); js.id = id;
+        //     js.src = "//connect.facebook.net/en_US/sdk.js";
+        //     fjs.parentNode.insertBefore(js, fjs);
+        // }(document, 'script', 'facebook-jssdk'));
     </script>
 
     <div id="app"></div>
-<!--     
+    <!--     
     <div class="fb-login-button" data-scope="public_profile,email" onlogin="checkLoginState();">
     </div> -->
 </body>

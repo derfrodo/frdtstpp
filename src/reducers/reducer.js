@@ -1,63 +1,30 @@
-import { LOGIN_STATUS_CHANGED, FACEBOOK_LOGIN } from "../actions/_allActions";
+import { combineReducers } from "redux";
 
-const initialState = {
-    loginStatus: {
-        status: {},
-        nextNumber: undefined,
-    },
-    currentUser:{}
-}
+import { userReducer } from "./userReducer";
+import { loginReducer } from "./loginReducer";
+import initialState from "./state";
 
-export const someApp = (state = initialState, action) => {
-    console.log("New action:")
-    console.log(action)
-
+const baseReducer = (state = {}, action) => {
     switch (action.type) {
-        case FACEBOOK_LOGIN:
-            return { ...state }
-        case LOGIN_STATUS_CHANGED:
-            return { ...state, loginStatus: reduceLoginStatus(state.loginStatus, action) };
-        case "Anoter known action":
-            return { ...state }; //additional property if needed...
         default:
-            console.warn("Unknown action type: " + action.type);
-            return state;
+            return { ...state, someValidation: { randomNumber: Math.random() } };
     }
 }
 
-export const reduceLoginStatus = (state = {}, action) => {
-    switch (action.type) {
-        case FACEBOOK_LOGIN:
-            return { ...state }
-        case LOGIN_STATUS_CHANGED:
-            console.log("new login status: ");
-            console.log(action.nextStatus);
-            return { ...state, status: action.nextStatus, nextNumber: action.someNumber };
-        default:
-            console.warn("Unknown action type: " + action.type);
-            return state;
-    }
-}
-
-
-export const reduceLoginStatus = (state = {}, action) => {
-    switch (action.type) {
-        case FACEBOOK_LOGIN:
-            return { ...state }
-        case LOGIN_STATUS_CHANGED:
-            console.log("new login status: ");
-            console.log(action.nextStatus);
-            return { ...state, status: action.nextStatus, nextNumber: action.someNumber };
-        default:
-            console.warn("Unknown action type: " + action.type);
-            return state;
-    }
-}
-
-const combinedReducers = combinedReducers({
-    loginStatus:
+const combinedReducers = combineReducers({
+    loginStatus: loginReducer,
+    currentUser: userReducer,
+    someValidation: (state = {}) => state
 });
 
 export const rootReducer = (state = initialState, action) => {
+    console.log("New action:")
+    console.log(action)
 
+    const intermediateState = combinedReducers(state, action);
+    const nextState = baseReducer(intermediateState, action)
+
+    console.log("Next State:")
+    console.log(nextState)
+    return nextState;
 }

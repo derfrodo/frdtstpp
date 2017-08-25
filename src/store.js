@@ -1,55 +1,53 @@
 
 // Store für redux...
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import { applyMiddleware, createStore, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { someApp, reduceLoginStatus } from "./reducers/reducer";
+import { rootReducer } from "./reducers/reducer";
 
 
 /* Credits goes to:
 https://lazamar.github.io/dispatching-from-inside-of-reducers/
+Seems not to work that perfectly with thunk package.
 */
 
 const asyncDispatchMiddleware = store => next => action => {
-    let syncActivityFinished = false;
-    let actionQueue = [];
+    if (action.type) {
+        let syncActivityFinished = false;
+        let actionQueue = [];
 
-    function flushQueue() {
-        actionQueue.forEach(a => store.dispatch(a)); // flush queue
-        actionQueue = [];
-    }
-
-    function asyncDispatch(asyncAction) {
-        actionQueue = actionQueue.concat([asyncAction]);
-
-        if (syncActivityFinished) {
-            flushQueue();
+        function flushQueue() {
+            actionQueue.forEach(a => store.dispatch(a)); // flush queue
+            actionQueue = [];
         }
+
+        function asyncDispatch(asyncAction) {
+            actionQueue = actionQueue.concat([asyncAction]);
+
+            if (syncActivityFinished) {
+                flushQueue();
+            }
+        }
+
+        const actionWithAsyncDispatch =
+            Object.assign({}, action, { asyncDispatch });
+
+        next(actionWithAsyncDispatch);
+        syncActivityFinished = true;
+        flushQueue();
     }
-
-    const actionWithAsyncDispatch =
-        Object.assign({}, action, { asyncDispatch });
-
-    next(actionWithAsyncDispatch);
-    syncActivityFinished = true;
-    flushQueue();
+    else{
+        next(action);
+    }
 };
 
-
-const store = createStore(
-    combineReducers(
-        {
-            loginStatus:reduceLoginStatus,
-        }
-
-    ),
-    window.STATE_FROM_SERVER,
-    applyMiddleware([asyncDispatchMiddleware, thunkMiddleware]));
+const store = createStore(rootReducer, window.STATE_FROM_SERVER, applyMiddleware(thunkMiddleware, asyncDispatchMiddleware));
 
 /* eslint-disable no-console */
-console.log(store.getState());
+// console.log(store);
+// console.log(store.getState());
 
-const unsubscribe = store.subscribe(
-    () => console.log(store.getState())
-);
+// const unsubscribe = store.subscribe(
+//     () => console.log(store.getState())
+// );
 
 export default store;
