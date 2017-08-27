@@ -4,44 +4,30 @@ import { connect } from "react-redux";
 import { FacebookLogin } from "./FacebookLogin";
 import { loginStatusChanged } from "./actions/loginActionCreators";
 
-
-export class RootApp extends React.Component {
-
-    componentDidMount() {
-        window.FB.init({
-            appId: "106897353319959",
-            cookie: true,
-            xfbml: true,
-            version: 'v2.8'
-        });
-
-        this.props.refreshLoginStatus();
-    }
-
-    render() {
-        return (
-            <div>
-                <div>
-                    <span className="glyphicon glyphicon-star"></span>
-                    Ich bin eine App!
-                </div>
-                <FacebookLogin />
-            </div>
-        );
-    }
-}
-
-const InfoComponent = ({ }) => {
+const InfoComponent = ({ isConnected, data }) => {
     return (
         <div>
-            UserComponent
-    </div>);
+            {isConnected ?
+                <ul>
+                    <li>
+                        User ID: {data.id}
+                    </li>
+                    <li>
+                        Name: {data.name}
+                    </li>
+                </ul> :
+                <div>
+                    User not logged in.
+                </div>
+            }
+        </div>);
 }
 
 export const UserInfo = connect(
     (state, ownProps) => {
         return {
-
+            data: state.currentUser.userData || {},
+            isConnected: state.loginStatus.isConnected,
         };
     },
     (dispatch, ownProps) => {

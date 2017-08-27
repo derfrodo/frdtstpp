@@ -1,6 +1,6 @@
 
 // Store für redux...
-import { applyMiddleware, createStore, combineReducers } from "redux";
+import { applyMiddleware, compose, createStore, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { rootReducer } from "./reducers/reducer";
 
@@ -40,7 +40,11 @@ const asyncDispatchMiddleware = store => next => action => {
     }
 };
 
-const store = createStore(rootReducer, window.STATE_FROM_SERVER, applyMiddleware(thunkMiddleware, asyncDispatchMiddleware));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer,
+    window.STATE_FROM_SERVER, 
+    composeEnhancers(applyMiddleware(thunkMiddleware, asyncDispatchMiddleware)));
 
 /* eslint-disable no-console */
 // console.log(store);

@@ -10,7 +10,13 @@ import {
 
 } from "../actions/_allActions";
 
-import { userDataReceived, getUserFriends, userFriendsReceived, getUserInbox, userInboxReceived } from "../actions/userActionCreators";
+import {
+    userDataReceived,
+    getUserFriends,
+    userFriendsReceived,
+    getUserInbox,
+    userInboxReceived
+} from "../actions/userActionCreators";
 
 export const userReducer = (state = {}, action) => {
     switch (action.type) {
@@ -19,15 +25,18 @@ export const userReducer = (state = {}, action) => {
                 performUserDataRequest(dispatch);
             }
             )
-            return { ...state }
+            return { ...state, userData: undefined }
         case USER_DATA_RECEIVED:
             if (!action.hasError) {
                 action.asyncDispatch(dispatch => {
                     dispatch(getUserFriends(action.user.id));
                     dispatch(getUserInbox(action.user.id));
                 })
+                return { ...state, userData: action.user }
             }
-            return { ...state }
+            else {
+                return { ...state, userData: undefined }
+            }
         case GET_USER_FRIENDS:
             action.asyncDispatch(dispatch => {
                 performUserFriendsRequest(action.id, dispatch);
@@ -50,7 +59,7 @@ export const userReducer = (state = {}, action) => {
 }
 
 const performUserDataRequest = (dispatch) => {
-    FB.api('/me', { fields: ["id", "name", "first_name", "last_name", "birthday"] }, function (response) {
+    window.FB.api('/me', { fields: ["id", "name", "first_name", "last_name", "birthday"] }, function (response) {
         console.log(response);
         dispatch(userDataReceived(response, false));
     });
@@ -58,7 +67,7 @@ const performUserDataRequest = (dispatch) => {
 
 const performUserFriendsRequest = (id, dispatch) => {
 
-    FB.api(`/${id}/friends`, function (response) {
+    window.FB.api(`/${id}/friends`, function (response) {
         console.log(response);
         dispatch(userFriendsReceived(response, false));
     });
@@ -66,7 +75,7 @@ const performUserFriendsRequest = (id, dispatch) => {
 
 const performUserInboxRequest = (id, dispatch) => {
 
-    FB.api(`/${id}/inbox`, function (response) {
+    window.FB.api(`/${id}/inbox`, function (response) {
         console.log(response);
         dispatch(userInboxReceived(response, false));
     });
